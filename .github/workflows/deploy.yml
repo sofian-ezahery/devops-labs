@@ -28,4 +28,27 @@ jobs:
             
             - name: Run tests
               run: python -m pytest
+    build:
+        needs: Quality
+        runs-on: ubuntu-latest
+        permissions:
+            packages: write
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Set env variables
+              run: echo "IMAGE_TAG=sha-${GITHUB_SHA::7}" >> $GITHUB_ENV
             
+            - name: Log in to GHCR
+              uses: docker/login-action@v3
+              with:
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
+            
+            - name: Build and push Docker image
+              uses: docker/build-push-action@v7
+              with:
+                  context: .
+                  push: true
+                  tags: ghcr.io/${{ github.repository }}:${{ env.IMAGE_TAG }}           
