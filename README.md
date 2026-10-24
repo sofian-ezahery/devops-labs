@@ -1,3 +1,5 @@
+# devops-labs
+
 ## How my pipeline works
 1. **Trigger:** The pipeline starts when I push code to `main` or when I open a pull request.
 2. **Job 1 – Quality:** First, the runner checks out the code and sets up Python 3.13.
