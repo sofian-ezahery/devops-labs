@@ -3,4 +3,3 @@ uvicorn
 pytest
 httpx2
 ruff
-requests==2.19.0
